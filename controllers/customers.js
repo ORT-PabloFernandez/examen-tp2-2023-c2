@@ -16,4 +16,14 @@ async function getCustomerWithMin4Account(accounts){
     return customers.getCustomerWithMin4Account(accounts);
 }
 
-module.exports = {getAllCustomers, getCustomer,findByEmail,getCustomerWithMin4Account};
+async function getCustomersWithAccountLimit(limit){
+    return customers.getCustomersWithAccountLimit(limit);
+}
+
+module.exports = {
+    getAllCustomers, 
+    getCustomer,
+    findByEmail,
+    getCustomerWithMin4Account,
+    getCustomersWithAccountLimit
+};

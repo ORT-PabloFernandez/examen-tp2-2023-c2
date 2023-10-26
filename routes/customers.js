@@ -24,7 +24,7 @@ router.get('/customerPorEmail/:email', async(req,res) => {
     }
 });
 
-//Ejercicio 2 , no se solicita ingerseso por parametro
+//Ejercicio 2 , 
 router.get('/custommer-with-min/:accounts', async(req,res) => {
     customers = await controller.getCustomerWithMin4Account(parseInt(req.params.accounts));
    
@@ -33,6 +33,17 @@ router.get('/custommer-with-min/:accounts', async(req,res) => {
     }else{
         //si el array es vacio devuelvo status 404 
         res.status(404).json({message : "Cliente no encontrado"});
+    }
+});
+
+//Ejercicio 4  Parametrizo para  luego si quiere buscar otra cantidad de clientes con otro limite
+router.get('/customers-with-account-limit/:limit', async (req, res) => {
+    const customers = await controller.getCustomersWithAccountLimit(parseInt(req.params.limit));
+
+    if (customers) {
+        res.json(customers);
+    } else {
+        res.status(404).json({ message: "Clientes no encontrados" });
     }
 });
 
