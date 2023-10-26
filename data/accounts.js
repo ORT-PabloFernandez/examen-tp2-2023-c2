@@ -13,6 +13,18 @@ async function getAllAccounts(pageSize, page){
     return accounts;
 }
 
+async function getAccountsGte10k(pageSize, page){
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .find({
+                            limit: {$gte: 10000}
+                        }).limit(pageSize).skip(pageSize * page)
+                        .toArray();    
+    return accounts;
+}
+
 async function getAccount(id){
     const connectiondb = await conn.getConnection();
     const account = await connectiondb
@@ -22,4 +34,4 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+module.exports = {getAllAccounts, getAccount,getAccountsGte10k};
