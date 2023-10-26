@@ -9,6 +9,10 @@ router.get('/', async (req, res) => {
     res.json(await controller.getAllCustomers(pageSize, page));
 });
 
+router.get('/mail/:mail', async (req, res) => {
+    res.json(await controller.getCustomerByEmail(req.params.mail));
+});
+
 router.get('/:id', async (req, res) => {
     res.json(await controller.getCustomer(req.params.id));
 });
