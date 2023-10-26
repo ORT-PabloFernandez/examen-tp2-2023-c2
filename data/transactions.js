@@ -16,4 +16,12 @@ async function getAllTransactions(pageSize, page) {
   return transactions;
 }
 
-module.exports = { getAllTransactions}
+async function getTransactionsByAccountId(account_id){
+  const connectiondb = await conn.getConnection();
+  const transaction = await connectiondb
+    .db(DATABASE)
+    .collection(TRANSACTIONS)
+    .findOne({ account_id: account_id});
+  return transaction;
+}
+module.exports = { getAllTransactions, getTransactionsByAccountId}

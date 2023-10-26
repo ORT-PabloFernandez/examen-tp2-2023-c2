@@ -4,4 +4,8 @@ async function getAllTransactions(pageSize, page) {
   return transactions.getAllTransactions(pageSize, page);
 }
 
-module.exports = { getAllTransactions };
+async function getTransactionsByAccountId(account_id) {
+  return transactions.getTransactionsByAccountId(account_id);
+}
+
+module.exports = { getAllTransactions, getTransactionsByAccountId };

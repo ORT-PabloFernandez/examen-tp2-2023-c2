@@ -19,4 +19,15 @@ async function getCustomersMinXAccounts(minAccountCount) {
 async function getCustomersWLimit10000() {
   return customers.getCustomersWLimit10000();
 }
-module.exports = { getAllCustomers, getCustomer, getCustomerByEmail, getCustomersMinXAccounts, getCustomersWLimit10000 };
+
+async function getCustomerTransactionsFromAccounts(name) {
+  return customers.getCustomerTransactionsFromAccounts(name);
+}
+module.exports = {
+  getAllCustomers,
+  getCustomer,
+  getCustomerByEmail,
+  getCustomersMinXAccounts,
+  getCustomersWLimit10000,
+  getCustomerTransactionsFromAccounts
+};

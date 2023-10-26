@@ -25,4 +25,8 @@ router.get("/accounts/min/:min_acc", async (req, res) => {
     res.json(await controller.getCustomersMinXAccounts(req.params.min_acc))
 });
 
+router.get('/transactions/name/:name',async (req,res)=>{
+  res.json(await controller.getCustomerTransactionsFromAccounts(req.params.name))
+})
+
 module.exports = router;

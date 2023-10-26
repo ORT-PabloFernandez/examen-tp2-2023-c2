@@ -1,5 +1,7 @@
 const { ObjectId } = require("mongodb");
 const accountController = require("../controllers/accounts");
+const transactionController = require("../controllers/transactions");
+
 const conn = require("./conn");
 const DATABASE = "sample_analytics";
 const CUSTOMERS = "customers";
@@ -54,4 +56,32 @@ async function getCustomersWLimit10000() {
     .toArray();
   return customer;
 }
-module.exports = { getAllCustomers, getCustomer, getCustomerByEmail, getCustomersMinXAccounts, getCustomersWLimit10000 };
+
+async function getCustomerByName(name) {
+  const connectiondb = await conn.getConnection();
+  const customer = await connectiondb.db(DATABASE).collection(CUSTOMERS).findOne({ name: name });
+  return customer;
+}
+
+async function getCustomerTransactionsFromAccounts(name) {
+  const customer = await getCustomerByName(name);
+  const accountsPromises = await customer.accounts.map((account) =>
+    accountController.getAccountByAccountID(account)
+  );
+
+  const accounts = await Promise.all(accountsPromises);
+  const transactionPromises = await accounts.map((account) =>
+    transactionController.getTransactionsByAccountId(account.account_id)
+  );
+  const transactions = await Promise.all(transactionPromises);
+  return transactions;
+}
+
+module.exports = {
+  getAllCustomers,
+  getCustomer,
+  getCustomerByEmail,
+  getCustomersMinXAccounts,
+  getCustomersWLimit10000,
+  getCustomerTransactionsFromAccounts
+};
