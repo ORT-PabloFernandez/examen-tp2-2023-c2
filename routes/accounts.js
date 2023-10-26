@@ -21,7 +21,7 @@ router.get('/Account-with-limit/:limit', async(req,res) => {
         res.json(accounts);
     }else{
         //si el array es vacio devuelvo status 404 
-        res.status(404).json({message : "Cliente no encontrado"});
+        res.status(404).json({message : "Ninguna cuenta tiene este limite"});
     }
 });
 
