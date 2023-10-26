@@ -2,6 +2,7 @@ const { ObjectId } = require("mongodb");
 const conn = require("./conn");
 const DATABASE = "sample_analytics";
 const CUSTOMERS = "customers";
+const ACCOUNTS = "accounts";
 
 async function getAllCustomers(pageSize, page) {
 	const connectiondb = await conn.getConnection();
@@ -61,9 +62,53 @@ async function getCustomersGte4() {
 	}
 }
 
+async function getCustomersLte10kAcounts() {
+	try {
+		const connectiondb = await conn.getConnection();
+		const customers = await connectiondb
+			.db(DATABASE)
+			.collection(CUSTOMERS)
+			.aggregate([
+                {
+					$lookup: {
+						from: ACCOUNTS,
+						localField: "accounts",
+						foreignField: "account_id",
+						as: "accountData",
+					},
+				},
+				{
+					$unwind: "$accountData",
+				},
+				{
+					$match: { "accountData.limit": { $lt: 10000 } },
+				},
+				{
+					$group: {
+						_id: "$_id",
+						customerData: { $first: "$$ROOT" },
+					},
+				},
+				{
+					$replaceRoot: { newRoot: "$customerData" },
+				},
+            ])
+			.toArray();
+
+		if (customers.length === 0) {
+			return { status: 404, data: "Not found customers con mas de 4 accounts" };
+		} else {
+			return customers;
+		}
+	} catch (error) {
+		return { status: 500, data: "Error" + error };
+	}
+}
+
 module.exports = {
 	getAllCustomers,
 	getCustomer,
 	getCustomerByEmail,
 	getCustomersGte4,
+	getCustomersLte10kAcounts,
 };

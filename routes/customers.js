@@ -13,6 +13,10 @@ router.get('/gte4accounts/', async (req, res) => {
     res.json(await controller.getCustomersGte4());
 });
 
+router.get('/lte10kAcounts/', async (req, res) => {
+    res.json(await controller.getCustomersLte10kAcounts());
+});
+
 router.get('/mail/:mail', async (req, res) => {
     res.json(await controller.getCustomerByEmail(req.params.mail));
 });
