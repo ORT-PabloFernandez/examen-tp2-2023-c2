@@ -26,11 +26,20 @@ async function getCustomer(id) {
 
 async function getCustomerByEmail(email) {
   const connectiondb = await conn.getConnection();
-  const customer = await connectiondb
-    .db(DATABASE)
-    .collection(CUSTOMERS)
-    .findOne({email:email})
+  const customer = await connectiondb.db(DATABASE).collection(CUSTOMERS).findOne({ email: email });
   return customer;
 }
 
-module.exports = { getAllCustomers, getCustomer, getCustomerByEmail };
+// le puse un parametro solo para ver que sea un poco mas escalable
+// el dia que se quiera aumentar la cantidad.
+async function getCustomersMinXAccounts(minAccountCount) {
+  const connectiondb = await conn.getConnection();
+    const customer = await connectiondb
+      .db(DATABASE)
+      .collection(CUSTOMERS)
+      .find({ $expr: { $gte: [{ $size: "$accounts" }, parseInt(minAccountCount)] } })
+      .toArray();
+    return customer;
+}
+
+module.exports = { getAllCustomers, getCustomer, getCustomerByEmail,getCustomersMinXAccounts };
