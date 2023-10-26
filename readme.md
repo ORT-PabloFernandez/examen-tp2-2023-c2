@@ -46,7 +46,26 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 
 -GET /api/accounts/:id
 
+//SE AÑADEN LOS SIGUIENTES ENDPOINTS:
 
+//routes/customers.js:
 
+-GET /customerByEmail/:email
+
+-GET /customer4AccountsOrMore/
+
+-GET /customersAccountLimit10000/
+
+-GET /customersByName/:name
+
+//routes/accounts.js:
+
+-GET /accountLimit10000
+
+-GET /accountByAccountId/:account_id
+
+//routes/transactions.js:
+
+-GET /customerTransactionsByName/:name
 
 

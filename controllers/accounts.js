@@ -8,4 +8,18 @@ async function getAccount(id){
     return accounts.getAccount(id);
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountLimit10000(){
+    return accounts.getAccountLimit10000();
+}
+
+async function getAccountByAccountId(account_id) {
+    return accounts.getAccountByAccountId(account_id);
+}
+
+module.exports = 
+{
+    getAllAccounts, 
+    getAccount, 
+    getAccountLimit10000, 
+    getAccountByAccountId
+};
