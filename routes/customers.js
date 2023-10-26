@@ -23,4 +23,8 @@ router.get("/4AccountsOrMore", async (req, res) => {
   res.json(await controller.getCustomer4accountsOrMore());
 });
 
+router.get("/clientescuentaslimit=10000", async (req, res) => {
+  res.json(await controller.getAccountlimit10000());
+});
+
 module.exports = router;

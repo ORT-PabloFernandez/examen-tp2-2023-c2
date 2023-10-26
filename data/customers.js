@@ -1,6 +1,7 @@
 const conn = require("./conn");
 const DATABASE = "sample_analytics";
 const CUSTOMERS = "customers";
+const ACCOUNTS = "accounts";
 
 async function getAllCustomers(pageSize, page) {
   const connectiondb = await conn.getConnection();
@@ -53,8 +54,25 @@ async function getCustomer4accountsOrMore() {
   return customer;
 }
 
+async function getAccountlimit10000() {
+  const connectiondb = await conn.getConnection();
+  const accounts = await connectiondb
+    .db(DATABASE)
+    .collection(ACCOUNTS)
+    .find({ limit: 10000 })
+    .toArray();
+  const idAccounts = accounts.map((account) => account.account_id);
+  const customer = await connectiondb
+    .db(DATABASE)
+    .collection(CUSTOMERS)
+    .find({ accounts: { $in: idAccounts } })
+    .toArray();
+  return customer;
+}
+
 module.exports = {
   getAllCustomers,
   findCustomerByEmail,
   getCustomer4accountsOrMore,
+  getAccountlimit10000,
 };
