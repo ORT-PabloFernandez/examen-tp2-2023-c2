@@ -22,4 +22,19 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+//ejercicio 3
+//De la otra collectios accounts necesitamos conocer las cuentas que tengan un limite de 10.000
+async function getAccountsWithLimit(){
+    try{
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .find({limit: 10000}).toArray();    
+    return accounts;
+    }catch(error){
+        console.error("Error al buscar cuentas con limite de 10k.", error);
+    }
+}
+
+module.exports = {getAllAccounts, getAccount, getAccountsWithLimit};
