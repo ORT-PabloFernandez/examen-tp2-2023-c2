@@ -62,7 +62,7 @@ async function getCustomersGte4() {
 	}
 }
 
-async function getCustomersLte10kAcounts() {
+async function getCustomersGte10kAcounts() {
 	try {
 		const connectiondb = await conn.getConnection();
 		const customers = await connectiondb
@@ -81,7 +81,7 @@ async function getCustomersLte10kAcounts() {
 					$unwind: "$accountData",
 				},
 				{
-					$match: { "accountData.limit": { $lt: 10000 } },
+					$match: { "accountData.limit": { $gte: 10000 } },
 				},
 				{
 					$group: {
@@ -110,5 +110,5 @@ module.exports = {
 	getCustomer,
 	getCustomerByEmail,
 	getCustomersGte4,
-	getCustomersLte10kAcounts,
+	getCustomersGte10kAcounts,
 };
