@@ -9,6 +9,12 @@ router.get('/', async (req, res) => {
     res.json(await controller.getAllAccounts(pageSize, page));
 });
 
+//Punto número 3 del exámen 
+router.get('/account-with-limit', async (req, res) => {
+    res.json(await controller.getAccountWithLimit());
+})
+
+
 router.get('/:id', async (req, res) => {
     res.json(await controller.getAccount(req.params.id));
 });

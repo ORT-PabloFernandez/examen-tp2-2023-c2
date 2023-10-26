@@ -2,6 +2,7 @@ const { ObjectId } = require('mongodb');
 const conn = require('./conn');
 const DATABASE = 'sample_analytics';
 const ACCOUNTS = 'accounts';
+const LIMIT = 10000;
 
 async function getAllAccounts(pageSize, page){
     const connectiondb = await conn.getConnection();
@@ -22,4 +23,21 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountWithLimit() {
+    try {
+        const connectiondb = await conn.getConnection();
+        const accounts = await connectiondb 
+                                .db(DATABASE)
+                                .collection(ACCOUNTS)
+                                .find({limit: 10000})
+                                .toArray();
+                    
+        return accounts;
+    } catch (error) {
+        console.log("Error al obtener las cuentas", error);
+        
+    }
+} 
+
+
+module.exports = {getAllAccounts, getAccount, getAccountWithLimit};
