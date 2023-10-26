@@ -15,11 +15,25 @@ async function getAllAccounts(pageSize, page){
 
 async function getAccount(id){
     const connectiondb = await conn.getConnection();
+
+    let idConv = parseInt(id)
     const account = await connectiondb
                         .db(DATABASE)
                         .collection(ACCOUNTS)
-                        .findOne({_id:new ObjectId(id)});    
+                        .findOne({account_id: idConv}); 
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountsLimite(){
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .find({limit: 10000})
+                        .toArray();    
+    return accounts;
+}
+
+
+
+module.exports = {getAllAccounts, getAccount, getAccountsLimite};
