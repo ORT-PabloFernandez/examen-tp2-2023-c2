@@ -22,4 +22,34 @@ async function getCustomer(id){
     return customer;
 }
 
-module.exports = {getAllCustomers, getCustomer};
+async function findByEmail(email){
+    const connectiondb = await conn.getConnection();
+    const customer = await connectiondb
+                        .db(DATABASE)
+                        .collection(CUSTOMERS)
+                        .findOne({email});    
+    return customer
+}
+
+async function getCustomerWithMin4Account(accounts) {
+    const connectiondb = await conn.getConnection();
+    const customers = await connectiondb
+      .db(DATABASE)
+      .collection(CUSTOMERS)
+      .find({
+        $expr: {
+          $gte: [{ $size: "$accounts" }, accounts],
+        },
+      })
+      .toArray();
+  
+    // Si el array es = a 0 devuelvo null para controlar un array vacio; 
+    if(customers.length === 0){
+        return null;
+    }
+
+    return customers;
+  }
+
+
+module.exports = {getAllCustomers, getCustomer,findByEmail,getCustomerWithMin4Account};
