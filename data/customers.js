@@ -43,4 +43,18 @@ async function findCustomerByEmail(email) {
   }
 }
 
-module.exports = { getAllCustomers, findCustomerByEmail };
+async function getCustomer4accountsOrMore() {
+  const connectiondb = await conn.getConnection();
+  const customer = await connectiondb
+    .db(DATABASE)
+    .collection(CUSTOMERS)
+    .find({ $expr: { $gte: [{ $size: "$accounts" }, 4] } })
+    .toArray();
+  return customer;
+}
+
+module.exports = {
+  getAllCustomers,
+  findCustomerByEmail,
+  getCustomer4accountsOrMore,
+};
