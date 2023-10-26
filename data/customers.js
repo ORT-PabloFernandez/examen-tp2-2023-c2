@@ -31,14 +31,39 @@ async function getCustomerByEmail(email) {
 			.db(DATABASE)
 			.collection(CUSTOMERS)
 			.findOne({ email: email });
-		if (customer !== null) {
-			return customer;
-		} else {
+		if (customer === null) {
 			return { status: 404, data: "Customer not found" };
+		} else {
+			return customer;
 		}
 	} catch (error) {
-		return { status: 404, data: "Error" + error };
+		return { status: 500, data: "Error" + error };
 	}
 }
 
-module.exports = { getAllCustomers, getCustomer, getCustomerByEmail };
+async function getCustomersGte4() {
+	try {
+		const connectiondb = await conn.getConnection();
+		const customers = await connectiondb
+			.db(DATABASE)
+			.collection(CUSTOMERS)
+			.find({
+                $expr: { $gte: [{ $size: "$accounts" }, 4] },
+            })
+			.toArray();
+		if (customers.length === 0) {
+			return { status: 404, data: "Not found customers con mas de 4 accounts" };
+		} else {
+			return customers;
+		}
+	} catch (error) {
+		return { status: 500, data: "Error" + error };
+	}
+}
+
+module.exports = {
+	getAllCustomers,
+	getCustomer,
+	getCustomerByEmail,
+	getCustomersGte4,
+};
