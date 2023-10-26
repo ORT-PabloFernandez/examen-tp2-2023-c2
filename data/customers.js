@@ -47,7 +47,7 @@ async function getCustomer4accountsOrMore() {
   const connectiondb = await conn.getConnection();
   const customer = await connectiondb
     .db(DATABASE)
-    .collection(CUSTOMERS)
+    .collection(CUSTOMERS) // con la expresion gte traigo 4 o mas, con la expresion gt igual
     .find({ $expr: { $gte: [{ $size: "$accounts" }, 4] } })
     .toArray();
   return customer;
