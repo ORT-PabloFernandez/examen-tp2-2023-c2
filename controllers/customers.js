@@ -12,7 +12,11 @@ async function getCustomerByEmail(email) {
   return customers.getCustomerByEmail(email);
 }
 
-async function getCustomersMinXAccounts(minAccountCount){
-    return customers.getCustomersMinXAccounts(minAccountCount)
+async function getCustomersMinXAccounts(minAccountCount) {
+  return customers.getCustomersMinXAccounts(minAccountCount);
 }
-module.exports = { getAllCustomers, getCustomer, getCustomerByEmail, getCustomersMinXAccounts };
+
+async function getCustomersWLimit10000() {
+  return customers.getCustomersWLimit10000();
+}
+module.exports = { getAllCustomers, getCustomer, getCustomerByEmail, getCustomersMinXAccounts, getCustomersWLimit10000 };

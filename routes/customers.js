@@ -9,6 +9,10 @@ router.get("/", async (req, res) => {
   res.json(await controller.getAllCustomers(pageSize, page));
 });
 
+router.get("/accountsWlimit10000", async (req, res) => {
+  res.json(await controller.getCustomersWLimit10000());
+});
+
 router.get("/:id", async (req, res) => {
   res.json(await controller.getCustomer(req.params.id));
 });

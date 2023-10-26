@@ -1,4 +1,5 @@
 const { ObjectId } = require("mongodb");
+const accountController = require("../controllers/accounts");
 const conn = require("./conn");
 const DATABASE = "sample_analytics";
 const CUSTOMERS = "customers";
@@ -34,12 +35,23 @@ async function getCustomerByEmail(email) {
 // el dia que se quiera aumentar la cantidad.
 async function getCustomersMinXAccounts(minAccountCount) {
   const connectiondb = await conn.getConnection();
-    const customer = await connectiondb
-      .db(DATABASE)
-      .collection(CUSTOMERS)
-      .find({ $expr: { $gte: [{ $size: "$accounts" }, parseInt(minAccountCount)] } })
-      .toArray();
-    return customer;
+  const customer = await connectiondb
+    .db(DATABASE)
+    .collection(CUSTOMERS)
+    .find({ $expr: { $gte: [{ $size: "$accounts" }, parseInt(minAccountCount)] } })
+    .toArray();
+  return customer;
 }
 
-module.exports = { getAllCustomers, getCustomer, getCustomerByEmail,getCustomersMinXAccounts };
+async function getCustomersWLimit10000() {
+  const connectiondb = await conn.getConnection();
+  const accounts = await accountController.getAccountLimit1000();
+  const idAccounts = accounts.map((account) => account.account_id);
+  const customer = await connectiondb
+    .db(DATABASE)
+    .collection(CUSTOMERS)
+    .find({ accounts: { $in: idAccounts } })
+    .toArray();
+  return customer;
+}
+module.exports = { getAllCustomers, getCustomer, getCustomerByEmail, getCustomersMinXAccounts, getCustomersWLimit10000 };
