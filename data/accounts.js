@@ -22,4 +22,25 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountWithLimit(limite) {
+    limite = parseInt(limite); //Parseo el limite 
+ 
+
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+      .db(DATABASE)
+      .collection(ACCOUNTS)
+      .find({
+        "limit": limite
+      })
+      .toArray();
+
+    //Si account lengh es 0 devuelvo null para controlor status code 
+    if (accounts.length === 0) {
+        return null;
+    }
+
+    return accounts;
+}
+
+module.exports = {getAllAccounts, getAccount,getAccountWithLimit};

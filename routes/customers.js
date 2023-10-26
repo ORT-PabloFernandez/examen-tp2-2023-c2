@@ -26,10 +26,10 @@ router.get('/customerPorEmail/:email', async(req,res) => {
 
 //Ejercicio 2 , no se solicita ingerseso por parametro
 router.get('/custommer-with-min/:accounts', async(req,res) => {
-    customer = await controller.getCustomerWithMin4Account(parseInt(req.params.accounts));
+    customers = await controller.getCustomerWithMin4Account(parseInt(req.params.accounts));
    
-    if(customer){
-        res.json(customer);
+    if(customers){
+        res.json(customers);
     }else{
         //si el array es vacio devuelvo status 404 
         res.status(404).json({message : "Cliente no encontrado"});

@@ -13,5 +13,16 @@ router.get('/:id', async (req, res) => {
     res.json(await controller.getAccount(req.params.id));
 });
 
+//Ejercicio 3 , no se solicita ingerseso por parametro
+router.get('/Account-with-limit/:limit', async(req,res) => {
+    accounts = await controller.getAccountWithLimit(req.params.limit);
+   
+    if(accounts){
+        res.json(accounts);
+    }else{
+        //si el array es vacio devuelvo status 404 
+        res.status(404).json({message : "Cliente no encontrado"});
+    }
+});
 
 module.exports = router;
