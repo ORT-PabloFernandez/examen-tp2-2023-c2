@@ -22,4 +22,20 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountsWithLimitAmount(){
+  try{
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .find({ limit: 10000})
+                        .toArray();
+    return accounts;
+    }
+
+ catch (error) {
+    console.error("No se encontro account con amount 10000:", error);
+    }
+}
+
+module.exports = {getAllAccounts, getAccount, getAccountsWithLimitAmount};
