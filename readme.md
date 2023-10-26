@@ -42,9 +42,17 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 
 -GET /api/customers/:id
 
+-GET /api/customers/email/:email
+
+-GET /api/customers/customers-with-accounts
+
+-GET /api/customers//customers-with-account-limit-10000
+
 -GET /api/accounts?pageSize=pageSize&page=page
 
 -GET /api/accounts/:id
+
+-GET /api/accounts/accounts-with-limit
 
 
 
