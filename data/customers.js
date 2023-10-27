@@ -78,7 +78,7 @@ async function getCustomersGte4() {
 	}
 }
 
-async function getCustomersGte10kAcounts() {
+async function getCustomersGte10kAcount() {
 	try {
 		const connectiondb = await conn.getConnection();
 		const customers = await connectiondb
@@ -97,7 +97,12 @@ async function getCustomersGte10kAcounts() {
 					$unwind: "$accountData",
 				},
 				{
-					$match: { "accountData.limit": { $gte: 10000 } },
+					$match: {
+						$and: [
+							{ "accountData.limit": { $gte: 10000 } },
+							{ $expr: { $eq: [{ $size: "$accounts" }, 1] } },
+						],
+					},
 				},
 				{
 					$group: {
@@ -112,7 +117,10 @@ async function getCustomersGte10kAcounts() {
 			.toArray();
 
 		if (customers.length === 0) {
-			return { status: 404, data: "Not found customers con cuentas de 10000 como limite" };
+			return {
+				status: 404,
+				data: "Not found customers con cuentas de 10000 como limite",
+			};
 		} else {
 			return customers;
 		}
@@ -126,5 +134,5 @@ module.exports = {
 	getCustomer,
 	getCustomerByEmail,
 	getCustomersGte4,
-	getCustomersGte10kAcounts,
+	getCustomersGte10kAcount,
 };

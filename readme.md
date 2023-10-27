@@ -54,7 +54,7 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 -GET /api/customers/gte4accounts
 -GET /api/accounts
 -GET /api/accounts/5ca4bbc7a2dd94ee58162551
--GET /api/accounts/getAccountsGte10k
+-GET /api/accounts/getAccountGte10k
 -GET /api/transactions
 -GET /api/transactions/5ca4bbc1a2dd94ee58161d33
 -GET /api/transactions/name/Christopher%20Watson

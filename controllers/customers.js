@@ -16,8 +16,8 @@ async function getCustomersGte4(){
     return customers.getCustomersGte4();
 }
 
-async function getCustomersGte10kAcounts(){
-    return customers.getCustomersGte10kAcounts();
+async function getCustomersGte10kAcount(){
+    return customers.getCustomersGte10kAcount();
 }
 
-module.exports = {getAllCustomers, getCustomer, getCustomerByEmail, getCustomersGte4, getCustomersGte10kAcounts};
+module.exports = {getAllCustomers, getCustomer, getCustomerByEmail, getCustomersGte4, getCustomersGte10kAcount};
