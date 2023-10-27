@@ -46,6 +46,19 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 
 -GET /api/accounts/:id
 
+# listado completo luego de realizar el parcial
+
+-GET /api/customers
+-GET /api/customers/5ca4bbcea2dd94ee58162b19
+-GET /api/customers/mail/courtneypaul@gmail.com
+-GET /api/customers/gte4accounts
+-GET /api/accounts
+-GET /api/accounts/5ca4bbc7a2dd94ee58162551
+-GET /api/accounts/getAccountsGte10k
+-GET /api/transactions
+-GET /api/transactions/5ca4bbc1a2dd94ee58161d33
+-GET /api/transactions/name/Christopher%20Watson
+
 
 
 
