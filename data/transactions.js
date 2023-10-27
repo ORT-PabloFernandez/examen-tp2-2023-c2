@@ -6,68 +6,96 @@ const CUSTOMERS = "customers";
 const ACCOUNTS = "accounts";
 
 async function getAllTransactions(pageSize, page) {
-	const connectiondb = await conn.getConnection();
-	const transactions = await connectiondb
-		.db(DATABASE)
-		.collection(TRANSACTIONS)
-		.find({})
-		.limit(pageSize)
-		.skip(pageSize * page)
-		.toArray();
-	return transactions;
+	try {
+		const connectiondb = await conn.getConnection();
+		const transactions = await connectiondb
+			.db(DATABASE)
+			.collection(TRANSACTIONS)
+			.find({})
+			.limit(pageSize)
+			.skip(pageSize * page)
+			.toArray();
+		if (transactions.length === 0) {
+			return { status: 404, data: "Not found transactions" };
+		} else {
+			return transactions;
+		}
+	} catch (error) {
+		return { status: 500, data: "Error" + error };
+	}
 }
 
 async function getAllTransactionsByName(name) {
-	const connectiondb = await conn.getConnection();
-	const pipeline = [
-		{
-			$lookup: {
-				from: "customers",
-				localField: "account_id",
-				foreignField: "accounts",
-				as: "customerInfo",
+	try {
+		const connectiondb = await conn.getConnection();
+		const pipeline = [
+			{
+				$lookup: {
+					from: "customers",
+					localField: "account_id",
+					foreignField: "accounts",
+					as: "customerInfo",
+				},
 			},
-		},
-		{
-			$unwind: "$customerInfo",
-		},
-		{
-			$match: {
-				"customerInfo.name": name,
+			{
+				$unwind: "$customerInfo",
 			},
-		},
-		{
-			$lookup: {
-				from: "accounts",
-				localField: "account_id",
-				foreignField: "account_id",
-				as: "customerAccounts",
+			{
+				$match: {
+					"customerInfo.name": name,
+				},
 			},
-		},
-		{
-			$group: {
-				_id: "$customerInfo._id",
-				name: { $first: "$customerInfo.name" },
-				transactions: { $push: "$$ROOT" },
+			{
+				$lookup: {
+					from: "accounts",
+					localField: "account_id",
+					foreignField: "account_id",
+					as: "customerAccounts",
+				},
 			},
-		},
-	];
+			{
+				$group: {
+					_id: "$customerInfo._id",
+					name: { $first: "$customerInfo.name" },
+					transactions: { $push: "$$ROOT" },
+				},
+			},
+		];
 
-	const transactions = await connectiondb
-		.db(DATABASE)
-		.collection(TRANSACTIONS)
-		.aggregate(pipeline)
-		.toArray();
-	return transactions;
+		const transactions = await connectiondb
+			.db(DATABASE)
+			.collection(TRANSACTIONS)
+			.aggregate(pipeline)
+			.toArray();
+
+		if (transactions.length === 0) {
+			return { status: 404, data: "Not found transactions" };
+		} else {
+			return transactions;
+		}
+	} catch (error) {
+		return { status: 500, data: "Error" + error };
+	}
 }
 
 async function getTransaction(id) {
-	const connectiondb = await conn.getConnection();
-	const transaction = await connectiondb
-		.db(DATABASE)
-		.collection(TRANSACTIONS)
-		.findOne({ _id: new ObjectId(id) });
-	return transaction;
+	try {
+		const connectiondb = await conn.getConnection();
+		const transaction = await connectiondb
+			.db(DATABASE)
+			.collection(TRANSACTIONS)
+			.findOne({ _id: new ObjectId(id) });
+		if (transaction === null) {
+			return {
+				status: 404,
+				data: "transaction not found",
+			};
+		} else {
+			return transaction;
+		}
+	} catch (error) {
+		return { status: 500, data: "Error" + error };
+	}
 }
 
 module.exports = {

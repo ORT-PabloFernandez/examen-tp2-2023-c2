@@ -5,24 +5,40 @@ const CUSTOMERS = "customers";
 const ACCOUNTS = "accounts";
 
 async function getAllCustomers(pageSize, page) {
-	const connectiondb = await conn.getConnection();
-	const customers = await connectiondb
-		.db(DATABASE)
-		.collection(CUSTOMERS)
-		.find({})
-		.limit(pageSize)
-		.skip(pageSize * page)
-		.toArray();
-	return customers;
+	try {
+		const connectiondb = await conn.getConnection();
+		const customers = await connectiondb
+			.db(DATABASE)
+			.collection(CUSTOMERS)
+			.find({})
+			.limit(pageSize)
+			.skip(pageSize * page)
+			.toArray();
+		if (customers.length === 0) {
+			return { status: 404, data: "Not found customers" };
+		} else {
+			return customers;
+		}
+	} catch (error) {
+		return { status: 500, data: "Error" + error };
+	}
 }
 
 async function getCustomer(id) {
-	const connectiondb = await conn.getConnection();
-	const customer = await connectiondb
-		.db(DATABASE)
-		.collection(CUSTOMERS)
-		.findOne({ _id: new ObjectId(id) });
-	return customer;
+	try {
+		const connectiondb = await conn.getConnection();
+		const customer = await connectiondb
+			.db(DATABASE)
+			.collection(CUSTOMERS)
+			.findOne({ _id: new ObjectId(id) });
+		if (customer === null) {
+			return { status: 404, data: "Customer not found" };
+		} else {
+			return customer;
+		}
+	} catch (error) {
+		return { status: 500, data: "Error" + error };
+	}
 }
 
 async function getCustomerByEmail(email) {
@@ -49,8 +65,8 @@ async function getCustomersGte4() {
 			.db(DATABASE)
 			.collection(CUSTOMERS)
 			.find({
-                $expr: { $gte: [{ $size: "$accounts" }, 4] },
-            })
+				$expr: { $gte: [{ $size: "$accounts" }, 4] },
+			})
 			.toArray();
 		if (customers.length === 0) {
 			return { status: 404, data: "Not found customers con mas de 4 accounts" };
@@ -69,7 +85,7 @@ async function getCustomersGte10kAcounts() {
 			.db(DATABASE)
 			.collection(CUSTOMERS)
 			.aggregate([
-                {
+				{
 					$lookup: {
 						from: ACCOUNTS,
 						localField: "accounts",
@@ -92,11 +108,11 @@ async function getCustomersGte10kAcounts() {
 				{
 					$replaceRoot: { newRoot: "$customerData" },
 				},
-            ])
+			])
 			.toArray();
 
 		if (customers.length === 0) {
-			return { status: 404, data: "Not found customers con mas de 4 accounts" };
+			return { status: 404, data: "Not found customers con cuentas de 10000 como limite" };
 		} else {
 			return customers;
 		}
