@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/accounts');
 
+router.get('/acountswithlimit/', async (req,res)=>{
+    res.json(await controller.getAcountsWithLimit())
+});
+
+router.get('/accountid/:id', async (req,res)=>{
+    res.json(await controller.getAccountByAccountId(parseInt(req.params.id)))
+})
+
 router.get('/', async (req, res) => {
     const pageSize = req.query.pageSize ? parseInt(req.query.pageSize): 0;
     const page = req.query.page ? parseInt(req.query.page): 0;
@@ -12,6 +20,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     res.json(await controller.getAccount(req.params.id));
 });
+
+
 
 
 module.exports = router;
