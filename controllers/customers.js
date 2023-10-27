@@ -16,9 +16,14 @@ async function getAccountlimit10000() {
   return customers.getAccountlimit10000();
 }
 
+async function getCustomerTransactionsFromAccounts(name) {
+  return customers.getCustomerTransactionsFromAccounts(name);
+}
+
 module.exports = {
   getAllCustomers,
   findCustomerByEmail,
   getCustomer4accountsOrMore,
   getAccountlimit10000,
+  getCustomerTransactionsFromAccounts,
 };

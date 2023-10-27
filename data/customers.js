@@ -2,6 +2,9 @@ const conn = require("./conn");
 const DATABASE = "sample_analytics";
 const CUSTOMERS = "customers";
 const ACCOUNTS = "accounts";
+const accountController = require("../controllers/accounts");
+const transactionController = require("../controllers/transactions");
+const { AbstractCursor } = require("mongodb");
 
 async function getAllCustomers(pageSize, page) {
   const connectiondb = await conn.getConnection();
@@ -23,6 +26,26 @@ async function getAllCustomers(pageSize, page) {
 //     .findOne({ _id: id });
 //   return customer;
 // }
+
+async function findCustomerByName(name) {
+  try {
+    const connectiondb = await conn.getConnection();
+
+    const customer = await connectiondb
+      .db(DATABASE)
+      .collection(CUSTOMERS)
+      .findOne({ name: name });
+
+    if (!customer) {
+      console.log("Cliente no encontrado por el nombre:", name);
+    }
+
+    return customer;
+  } catch (error) {
+    console.error("Error al buscar el cliente por el nombre:", error);
+    throw error;
+  }
+}
 
 async function findCustomerByEmail(email) {
   try {
@@ -70,9 +93,29 @@ async function getAccountlimit10000() {
   return customer;
 }
 
+async function getCustomerTransactionsFromAccounts(name) {
+  try {
+    const customer = await findCustomerByName(name);
+    const accountsMap = await customer.accounts.map((account) =>
+      accountController.getAccountByAccountID(account)
+    );
+
+    const accounts = await Promise.all(accountsMap); // que se cumplan todas las promesas
+    const transactionMap = await accounts.map((account) =>
+      transactionController.getTransactionsByAccountId(account.account_id)
+    );
+    const transactions = await Promise.all(transactionMap);
+    return transactions;
+  } catch (error) {
+    console.error("Error obteniendo info.", error);
+    throw error;
+  }
+}
+
 module.exports = {
   getAllCustomers,
   findCustomerByEmail,
   getCustomer4accountsOrMore,
   getAccountlimit10000,
+  getCustomerTransactionsFromAccounts,
 };
