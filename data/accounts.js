@@ -43,4 +43,8 @@ async function getAccountWithLimit(limite) {
     return accounts;
 }
 
-module.exports = {getAllAccounts, getAccount,getAccountWithLimit};
+module.exports = {
+  getAllAccounts, 
+  getAccount,
+  getAccountWithLimit
+};

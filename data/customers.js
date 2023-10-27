@@ -84,7 +84,8 @@ async function getCustomerWithMin4Account(accounts) {
 }
 
 
-module.exports = {getAllCustomers, 
+module.exports = {
+    getAllCustomers, 
     getCustomer,
     findByEmail,
     getCustomerWithMin4Account,
