@@ -1,4 +1,5 @@
 # TALLER DE PROGRAMACION 2
+
 ## Instrucciones de resolución del examen recuperatorio
 
 Es tu primer día en [tecnoshare.com](http://tecnoshare.com) luego de un intenso entrenamiento de 10 semanas por fin tenes la oportunidad de mostrar lo que aprendiste, y tu potencial como desarrollador backend en nodejs con express y mongodb.
@@ -7,46 +8,43 @@ Luego de abrir el correo encuentras un mail de tu Líder Técnico con tu primera
 
 > Bienvenid@! estuvimos esperando por horas que llegaras, tenemos varias tareas criticas y prioritarias en nuestro backlog. Por favor presta mucha atención a las instrucciones. No dudes en preguntarme cualquier cosa, aunque generalmente estoy muy ocupado resolviendo problemas heredados de las rotaciones de los desarrolladores.
 
-> En el presente repositorío encontrarás un proyecto de nodejs que ya tiene codigo base del backend con el que vamos a trabajar. Te aconsejo que sigas los siguientes pasos para armar tu entorno de trabajo. 
+> En el presente repositorío encontrarás un proyecto de nodejs que ya tiene codigo base del backend con el que vamos a trabajar. Te aconsejo que sigas los siguientes pasos para armar tu entorno de trabajo.
 
 > 1. Realizar un Fork del presente repositorio
 > 2. Realizar un clone del presente repositorio
 > 3. Instalar las dependencias
 > 4. Solicitar las variables de entorno que contiene la conexion string a mongodb (antes de preguntar, revisa el chat, seguro estan ahí)
-> 5. Ejecutar el servidor web de la api REST con el script de npm start-dev si queres trabajar con nodemon (tendrías que instalarlo) con start solo, tambien funciona. 
-> El backend se conecta con una base de datos Mongodb en la cual se encuentra la base de datos **sample_analytics** con las collections llamadas **accounts**, **customers** y **transactions** que contienen las transacciones de 500 clientes.
-> 6. Proba el endpoint que ya se encuentra desarrollado: /api/customers debería retornar un json con los 500 clientes. Esta implementado el paginado, aunque es totalmente opcional. Sí por algun motivo no llegase a funcionar, solicita asistencia. 
+> 5. Ejecutar el servidor web de la api REST con el script de npm start-dev si queres trabajar con nodemon (tendrías que instalarlo) con start solo, tambien funciona.
+>    El backend se conecta con una base de datos Mongodb en la cual se encuentra la base de datos **sample_analytics** con las collections llamadas **accounts**, **customers** y **transactions** que contienen las transacciones de 500 clientes.
+> 6. Proba el endpoint que ya se encuentra desarrollado: /api/customers debería retornar un json con los 500 clientes. Esta implementado el paginado, aunque es totalmente opcional. Sí por algun motivo no llegase a funcionar, solicita asistencia.
 
 > ### TUS TAREAS SON LAS SIGUIENTES POR ORDEN DE PRIORIDAD
-> 1. Necesitamos un endpoint que nos devuelva un cliente  (**customer**) particular por email
+>
+> 1. Necesitamos un endpoint que nos devuelva un cliente (**customer**) particular por email
 > 2. Necesitamos un endpoint que retorne los clientes que tengan al menos 4 cuentas (**accounts**)
-> 3. De la otra collectios **accounts** necesitamos conocer las cuentas que tengan un limite de 10.000  
+> 3. De la otra collectios **accounts** necesitamos conocer las cuentas que tengan un limite de 10.000
 > 4. Necesitamos un listado de los clientes que tienen una cuenta con 10.000 de limite
 
 > ### SI TE DA EL TIEMPO DAME UN MANO TAMBIEN EN...
-> 5. Necesitamos conocer todas las transacciones **transactions** que realizo el cliente: **Christopher Watson** en todas sus cuentas 
+>
+> 5. Necesitamos conocer todas las transacciones **transactions** que realizo el cliente: **Christopher Watson** en todas sus cuentas
 >
 > Desde ya muchas gracias por la colaboración! 😉 como te comente en la entrevista soy muy detallista en la prolijidad del codigo y la performance cada detalle cuenta, no me gusta mucho las cosas fuera del estandar de APIREST, sin embargo si no estas seguro, es mejor que lo resuelvas como puedas y me dejes notas en el readme.md del repo, para que yo pueda probar.
 
 ## Intrucciones para la entrega
+
 Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para la entrega:
 
 1. Completar el listado de endpoints, especificando parametros si los hubiera, mas abajo en este mismo archivo.
 2. Realizar un commit a tu repo con un mensaje con tu nombre completo
-2. Realizar un push a tu repositorio
-3. Realizar un pull request a mi repositorio
-
+3. Realizar un push a tu repositorio
+4. Realizar un pull request a mi repositorio
 
 ## Listado de endpoint
--GET /api/customers?pageSize=pageSize&page=page
 
--GET /api/customers/:id
+-GET http://localhost:3000/api/customers?pageSize=10Size&page=1
 
--GET /api/accounts?pageSize=pageSize&page=page
+-GET http://localhost:3000/api/customers/5ca4bbcea2dd94ee58162a86
 
--GET /api/accounts/:id
-
-
-
-
-
+-GET http://localhost:3000/api/accounts?pageSize=10&page=1
+-GET http://localhost:3000/api/accounts/5ca4bbc7a2dd94ee58162551
