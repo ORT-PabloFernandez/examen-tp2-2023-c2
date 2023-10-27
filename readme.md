@@ -47,6 +47,20 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 -GET /api/accounts/:id
 
 
+# SOLUCION
+
+1) http://localhost:3000/api/customers/email/lopezchristopher@yahoo.com 
+    http://localhost:3000/api/customers/email/:email
+
+2)  http://localhost:3000/api/customers/fouraccount
+
+3) http://localhost:3000/api/account/limit
+
+4) http://localhost:3000/api/customers/limit
+
+5) http://localhost:3000/api/customers/name_for_account/Christopher%20Watson
+    http://localhost:3000/api/customers/name_for_account/:name_for_account
+
 
 
 

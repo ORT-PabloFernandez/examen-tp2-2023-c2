@@ -22,4 +22,29 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountId(account_id){
+    const connectiondb = await conn.getConnection();
+    const account = await connectiondb
+      .db(DATABASE)
+      .collection(ACCOUNTS)
+      .findOne({ account_id });
+      console.log('account', account);
+    return account;
+}
+
+async function getAccountWithLimit(){
+    const connectiondb = await conn.getConnection();
+    const account = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .find({ limit: 10000 })
+                        .toArray();
+    return account;
+}
+
+module.exports = {
+    getAllAccounts,
+    getAccount,
+    getAccountWithLimit,
+    getAccountId
+};
