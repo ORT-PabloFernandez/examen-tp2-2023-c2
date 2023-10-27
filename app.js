@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const customersRouter = require("./routes/customers");
 const accountsRouter = require("./routes/accounts");
+const transactionsRouter = require("./routes/transactions")
 
 const cors = require("cors");
 
@@ -28,6 +29,7 @@ app.use("/", indexRouter);
 app.use("/api/users/", usersRouter);
 app.use("/api/customers/", customersRouter);
 app.use("/api/accounts/", accountsRouter);
+app.use("/api/transactions/", transactionsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
