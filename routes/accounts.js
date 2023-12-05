@@ -9,9 +9,14 @@ router.get('/', async (req, res) => {
     res.json(await controller.getAllAccounts(pageSize, page));
 });
 
-router.get('/:id', async (req, res) => {
-    res.json(await controller.getAccount(req.params.id));
+router.get('/limit', async (req, res) => {
+    const limit = 10000
+    res.json(await controller.getAccountLimit(limit));
 });
+
+// router.get('/:id', async (req, res) => {
+//     res.json(await controller.getAccount(req.params.id));
+// });
 
 
 module.exports = router;

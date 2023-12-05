@@ -22,4 +22,17 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountLimit(number){
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .find({})
+                        .toArray();
+                        
+    const filtradas = accounts.filter(account => account.limit === number)
+    return filtradas;
+}
+
+
+module.exports = {getAllAccounts, getAccount, getAccountLimit};

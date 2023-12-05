@@ -22,4 +22,28 @@ async function getCustomer(id){
     return customer;
 }
 
-module.exports = {getAllCustomers, getCustomer};
+async function getCustomerByEmail(email){
+    const connectiondb = await conn.getConnection();
+    const customer = await connectiondb
+                        .db(DATABASE)
+                        .collection(CUSTOMERS)
+                        .findOne({email:email});    
+    return customer;
+}
+
+async function getCustomersFourAccounts(number){
+    const connectiondb = await conn.getConnection();
+    const customers = await connectiondb
+                        .db(DATABASE)
+                        .collection(CUSTOMERS)
+                        .find({})
+                        .toArray();
+                        
+    const filtrado = customers.filter(customer => customer.accounts.length >= number)
+
+    return filtrado;
+}
+
+
+
+module.exports = {getAllCustomers, getCustomer, getCustomerByEmail, getCustomersFourAccounts};
