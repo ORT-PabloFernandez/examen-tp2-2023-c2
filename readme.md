@@ -46,6 +46,13 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 
 -GET /api/accounts/:id
 
+-GET /api/customers/:email [no funnciona por error con el ObjectId]
+
+-GET /api/customers/ [devuelve todos los clientes]
+
+-GET /api/accounts/ [devuelve todas las cuentas]
+
+
 
 
 
