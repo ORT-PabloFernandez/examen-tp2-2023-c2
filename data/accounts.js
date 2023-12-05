@@ -11,6 +11,17 @@ async function getAllAccounts(pageSize, page){
                         .find({}).limit(pageSize).skip(pageSize * page)
                         .toArray();    
     return accounts;
+    
+}
+
+async function getAccounts(){
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .toArray();    
+    return accounts;
+    
 }
 
 async function getAccount(id){
@@ -22,4 +33,4 @@ async function getAccount(id){
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+module.exports = {getAllAccounts, getAccount, getAccounts};
