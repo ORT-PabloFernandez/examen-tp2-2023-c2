@@ -46,6 +46,8 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 
 -GET /api/accounts/:id
 
+-GET /api/customers/email/steven93@gmail.com
+
 
 
 
