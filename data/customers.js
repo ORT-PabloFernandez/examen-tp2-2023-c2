@@ -31,4 +31,16 @@ async function getCustomerByEmail(email){
     return customer;
 }
 
-module.exports = {getAllCustomers, getCustomer, getCustomerByEmail};
+async function getCustomerWith4OrMoreAccounts(){
+    const connectiondb = await conn.getConnection();
+    const customer = await connectiondb
+                        .db(DATABASE)
+                        .collection(CUSTOMERS)
+                        .find({ 
+                            "accounts": { $exists: true, $size: { $gte: 4 } } })
+                        .toArray();
+    return customer;
+}
+
+
+module.exports = {getAllCustomers, getCustomer, getCustomerByEmail, getCustomerWith4OrMoreAccounts};

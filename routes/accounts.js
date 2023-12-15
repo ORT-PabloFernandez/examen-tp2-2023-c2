@@ -14,4 +14,10 @@ router.get('/:id', async (req, res) => {
 });
 
 
+router.get('/10kLimitAccounts', async (req, res) => {
+    res.json(await controller.getAll10kLimitAccounts());
+});
+
+
+
 module.exports = router;

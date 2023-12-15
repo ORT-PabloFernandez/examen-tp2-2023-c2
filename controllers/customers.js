@@ -13,4 +13,8 @@ async function getCustomerByEmail(email){
     return customers.getCustomerByEmail(email);
 }
 
-module.exports = {getAllCustomers, getCustomer, getCustomerByEmail};
+async function getCustomerWith4OrMoreAccounts(){
+    return customers.getCustomerWith4OrMoreAccounts();
+}
+
+module.exports = {getAllCustomers, getCustomer, getCustomerByEmail, getCustomerWith4OrMoreAccounts};
