@@ -22,4 +22,68 @@ async function getCustomer(id){
     return customer;
 }
 
-module.exports = {getAllCustomers, getCustomer};
+async function getCustomerByEmail(email){
+    const connectiondb = await conn.getConnection();
+    const customer = await connectiondb
+                        .db(DATABASE)
+                        .collection(CUSTOMERS)
+                        .findOne({ email }); 
+    return customer;
+}
+
+async function getAllAccountsForCustomer(id) {
+    const connectiondb = await conn.getConnection();
+    const customerAccounts = await connectiondb
+        .db(DATABASE)
+        .collection(CUSTOMERS)
+        .find({ id }) 
+        .toArray();
+
+    return customerAccounts;
+}
+
+async function getCustomersWithFourOrMoreAccounts() {
+    const connectiondb = await conn.getConnection();
+  
+    return connectiondb
+      .db(DATABASE)
+      .collection(CUSTOMERS)
+      .find({
+        $expr: { $gte: [{ $size: "$accounts" }, 4] }
+      })
+      .toArray();
+  }
+
+async function getCustomersWithHighLimit(limit) {
+    const connectiondb = await conn.getConnection();
+  
+    return connectiondb
+      .db(DATABASE)
+      .collection(CUSTOMERS)
+      .aggregate([
+        {
+          $lookup: {
+            from: ACCOUNTS,
+            localField: 'accounts',
+            foreignField: 'account_id',
+            as: 'matchingAccounts'
+          }
+        },
+        {
+          $match: {
+            'matchingAccounts.limit': limit
+          }
+        },
+        {
+          $project: {
+            username: 1,
+            name: 1,
+            email: 1,
+          }
+        }
+      ])
+      .toArray();
+  }
+
+
+module.exports = {getAllCustomers, getCustomer, getCustomerByEmail, getAllAccountsForCustomer, getCustomersWithHighLimit, getCustomersWithFourOrMoreAccounts};

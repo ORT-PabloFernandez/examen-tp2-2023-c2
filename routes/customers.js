@@ -13,5 +13,25 @@ router.get('/:id', async (req, res) => {
     res.json(await controller.getCustomer(req.params.id));
 });
 
+router.get('/byEmail/:email', async (req, res) => {
+    res.json(await controller.getCustomerByEmail(req.params.email));
+       
+        
+});
+
+router.get('/withFourOrMoreAccounts', async (req, res) => {
+    res.json(await controller.getCustomersWithFourOrMoreAccounts());
+
+});
+
+
+router.get('/highLimitCustomers/:limit', async (req, res) => {
+    const limit = req.query.limit ? parseInt(req.query.limit): 10000;
+    res.json(await controller.getCustomersWithHighLimit(limit));
+     });
+
+
+
+
 
 module.exports = router;

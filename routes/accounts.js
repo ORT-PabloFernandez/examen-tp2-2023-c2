@@ -13,5 +13,12 @@ router.get('/:id', async (req, res) => {
     res.json(await controller.getAccount(req.params.id));
 });
 
+router.get('/withLimit/:limit', async (req, res) => {
+    const limit = req.querylimit ? parseInt(req.query.limit): 10000;
+    res.json(await controller.getAllAccountsByLimit(limit));
+ });
+
+ 
+
 
 module.exports = router;
