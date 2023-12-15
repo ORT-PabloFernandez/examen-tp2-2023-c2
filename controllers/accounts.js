@@ -7,5 +7,8 @@ async function getAllAccounts(pageSize, page){
 async function getAccount(id){
     return accounts.getAccount(id);
 }
+async function getAccountsByLimit(limit) {
+    return accounts.getAccountsByLimit(limit);
+}
 
-module.exports = {getAllAccounts, getAccount};
+module.exports = {getAllAccounts, getAccount, getAccountsByLimit};

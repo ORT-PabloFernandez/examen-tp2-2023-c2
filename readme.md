@@ -46,7 +46,10 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 
 -GET /api/accounts/:id
 
+-GET http://localhost:3000/api/customers/by-email/mailDeUsuario
 
+-GET http://localhost:3000/api/customers/accounts
 
+-GET http://localhost:3000/api/accounts/by-limit/10000
 
-
+-GET http://localhost:3000/api/customers/by-account-limit/10000
