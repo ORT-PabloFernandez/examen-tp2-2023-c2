@@ -22,4 +22,25 @@ async function getCustomer(id){
     return customer;
 }
 
-module.exports = {getAllCustomers, getCustomer};
+async function getCustomerByEmail(email) {
+    const connectiondb = await conn.getConnection();
+    const customer = await connectiondb
+                        .db(DATABASE)
+                        .collection(CUSTOMERS)
+                        .findOne({email: email})
+    return customer;
+}
+
+/*async function getCustomersByQuantityAccounts(quantity) {
+    //const connectiondb = await conn.getConnection();
+    const allCustomers = await getAllCustomers(0, 0);
+    const 
+    return customers;
+}*/
+
+module.exports = {
+    getAllCustomers,
+     getCustomer,
+     getCustomerByEmail
+     
+};

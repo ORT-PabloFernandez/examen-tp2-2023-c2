@@ -18,8 +18,32 @@ async function getAccount(id){
     const account = await connectiondb
                         .db(DATABASE)
                         .collection(ACCOUNTS)
-                        .findOne({_id:new ObjectId(id)});    
+                        .findOne({_id:new ObjectId(id)});
     return account;
 }
 
-module.exports = {getAllAccounts, getAccount};
+async function getAccountsByLimit(limit) {
+    const connectiondb = await conn.getConnection();
+    const accounts = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .find({limit: limit})
+                        .toArray();
+    return accounts;
+}
+
+async function getAccountByAccountId(accountId) {
+    const connectiondb = await conn.getConnection();
+    const account = await connectiondb
+                        .db(DATABASE)
+                        .collection(ACCOUNTS)
+                        .findOne({account_id: parseInt(accountId)});
+    return account;
+}
+
+module.exports = {
+    getAllAccounts,
+    getAccount,
+    getAccountsByLimit,
+    getAccountByAccountId
+};

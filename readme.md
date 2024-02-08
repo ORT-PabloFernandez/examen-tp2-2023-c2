@@ -46,7 +46,14 @@ Si ya terminaste o son las 10:00 asegurate de seguir los siguientes pasos para l
 
 -GET /api/accounts/:id
 
+-------
 
+-GET /api/customers/email?email=email
 
+-GET /api/customers/accounts/four
 
+-GET /api/accounts/limit/:limit
 
+-GET /api/customers/account/:limit
+
+-GET /api/accounts/accountId/:accountId
